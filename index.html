@@ -1,0 +1,67 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Building Information System</title>
+  <style>
+    html, body, #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 90%;
+      width: 100%;
+    }
+  </style>
+  
+  <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.13/"></script>
+  
+  <script>  
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer",
+      "esri/widgets/Editor",
+      "esri/layers/GraphicsLayer",
+      "esri/Graphic"
+    ], function(Map, MapView, FeatureLayer, Editor, GraphicsLayer, Graphic) {
+      
+      //*** ADD ***//
+      var myPolygonFeatureLayer = new FeatureLayer({
+        //*** Replace with your URL ***//
+        url: 'https://services5.arcgis.com/M4yan1HbkpiY0Zxi/arcgis/rest/services/buildings/FeatureServer'
+      });
+
+      var map = new Map({
+        basemap: "topo-vector",
+        layers: [myPolygonFeatureLayer]
+      });
+
+      var graphicsLayer = new GraphicsLayer();
+       map.add(graphicsLayer);
+
+      var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [3.4346997,6.8070362],
+        zoom: 16
+      });
+      
+      var editorWidget = new Editor({
+        view: view
+      });
+
+      view.ui.add(editorWidget, "top-right");
+
+    });
+  </script>
+</head>
+<body>
+  <div id="viewDiv"></div>
+  <div>
+      <h2>Features</h2>
+      <h3>Add Building</h3>
+      <h3>Remove Building</h3>
+      <h3>Edit Building Attribute</h3>
+  </div>
+</body>
+</html>
